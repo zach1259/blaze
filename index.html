@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Blaze</title>
+        
+        <link rel="stylesheet" href="blaze.css" type="text/css" />
+        
+        <script src="lib/jquery1.8.2.js" type="text/javascript"></script>
+        <script src="lib/underscore.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            var blaze = {};
+        </script>
+        <script type="text/javascript" src="src/Util.js"></script>
+        <script type="text/javascript" src="src/Model.js"></script>
+        <script type="text/javascript" src="src/View.js"></script>
+        <script type="text/javascript" src="src/Controller.js"></script>
+    </head>
+    <body>
+        <div id="canvas_wrap"><canvas id="canvas"></canvas></div>
+        <div id="controls">
+            <h3>Blaze</h3>
+            <div class="stats">
+                <div id="water">
+                    Water Left:
+                    <div><span class="value">--</span>%</div>
+                </div>
+                <div id="burned">
+                    Trees Burned:
+                    <div><span class="value">--</span>%</div>
+                </div>
+            </div>
+            <a class="btn" id="restart">Start</a>
+        </div>
+  </body>  
+</html>

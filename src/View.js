@@ -26,6 +26,24 @@
 		this.canvas.mouseleave(_.bind(this._mouseLeave, this));
 	};
 
+	blaze.View.prototype.drawForrest = function() {
+		this.size = this.model.getGridSize();
+		for (var x = 0; x < this.size; x++) {
+			for (var y = 0; y < this.size; y++) {
+				this.drawColors(x, y);
+				this.ctx.fillRect(x / this.size, y / this.size, 1 / this.size, 1 / this.size);
+			}
+		}
+	};
+
+	blaze.View.prototype.drawColors = function(x, y) {
+		if (this.model.forrest[x][y] <= this.model.getPrecentGreen()) {
+			this.ctx.fillStyle = "#855e42";
+		} else {
+			this.ctx.fillStyle = "#00ff00";
+		}
+	};
+
 	blaze.View.prototype._mouseClick = function(event) {
 	};
 	blaze.View.prototype._mouseMove = function(event) {
@@ -34,6 +52,8 @@
 	};
 
 	blaze.View.prototype.update = function() {
+		$("#water .value").text("left");
+		this.drawForrest();
 	};
 
 }());

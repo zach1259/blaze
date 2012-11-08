@@ -24,8 +24,6 @@
 		this.canvas.click(_.bind(this._mouseClick, this));
 		this.canvas.mousemove(_.bind(this._mouseMove, this));
 		this.canvas.mouseleave(_.bind(this._mouseLeave, this));
-
-		this.water = 100;
 	};
 
 	blaze.View.prototype.drawForrest = function() {
@@ -55,12 +53,12 @@
 		var pixelX = event.pageX;
 		var pixelY = event.pageY;
 	
-		var x = Math.floor((pixelX / (462 / this.model.getGridSize())) - 1);
-		var y = Math.floor((pixelY / (462 / this.model.getGridSize())) - 1);
+		var x = Math.floor(pixelX / (462 / this.model.getGridSize()) - 1);
+		var y = Math.floor(pixelY / (462 / this.model.getGridSize()) - 1);
 
-		if (this.water > 0) {
+		if (this.model.water > 1) {
 			this.model.forrest[x][y] = 2;
-			this.water -= 100 / this.model.getWater()
+			this.model.water -= 100 / this.model.getWater();
 			this.update();
 		}
 	};
@@ -70,7 +68,7 @@
 	};
 
 	blaze.View.prototype.update = function() {
-		$("#water .value").text(Math.floor(this.water));
+		$("#water .value").text(Math.floor(this.model.water));
 		this.drawForrest();
 	};
 

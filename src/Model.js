@@ -6,6 +6,8 @@
 		this.getGridSize = _.constant(setup.gridSize);
 		this.getPrecentGreen = _.constant(setup.precentGreen);
 		this.getWater = _.constant(setup.waterTankSize);
+
+		this.water = 100;
 	};
 
 	blaze.Model.prototype.restart = function() {
@@ -16,6 +18,7 @@
 				this.forrest[x][y] = Math.random();
 			}
 		}
+		this.water = 100;
 	};
 
 	blaze.Model.prototype.isBurning = function() {

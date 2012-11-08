@@ -5,6 +5,7 @@
 	blaze.Model = function(setup) {
 		this.getGridSize = _.constant(setup.gridSize);
 		this.getPrecentGreen = _.constant(setup.precentGreen);
+		this.getWater = _.constant(setup.waterTankSize);
 	};
 
 	blaze.Model.prototype.restart = function() {

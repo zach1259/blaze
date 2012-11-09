@@ -78,7 +78,7 @@
 				}	
 			}
 		}
-		this.burned = Math.floor((totalBurned / (this.getGridSize() * this.getGridSize())) * 100);
+		this.burned = Math.floor((totalBurned / (this.getGridSize() * this.getGridSize())) * 200);
 	};
 
 	blaze.Square = function(x, y) {

@@ -38,26 +38,28 @@
 
 	blaze.View.prototype.drawColors = function(x, y) {
 		var forrest = this.model.forrest;
-		if (forrest[x][y] <= this.model.getPrecentGreen()) {
-			this.ctx.fillStyle = "#855e42";
-		} else if (forrest[x][y] === 2) {
-			this.ctx.fillStyle = "#0000ff";
-		} else if (forrest[x][y] === 3) {
-			this.ctx.fillStyle = "#ff0000";
-		}else {
+		if (forrest[x][y].color <= this.model.getPrecentGreen()) {
 			this.ctx.fillStyle = "#00ff00";
+		} else if (forrest[x][y].color === 2) {
+			this.ctx.fillStyle = "#0000ff";
+		} else if (forrest[x][y].color === 3) {
+			this.ctx.fillStyle = "#ff0000";
+		} else if (forrest[x][y].color === 4) {
+			this.ctx.fillStyle = "#909090"
+		} else {
+			this.ctx.fillStyle = "#855e42";
 		}
 	};
 
 	blaze.View.prototype._mouseClick = function(event) {
-		var pixelX = event.pageX;
-		var pixelY = event.pageY;
+		var pixelX = event.pageX - this.canvas.offset().left;
+		var pixelY = event.pageY - this.canvas.offset().top;
 	
-		var x = Math.floor(pixelX / (462 / this.model.getGridSize()) - 1);
-		var y = Math.floor(pixelY / (462 / this.model.getGridSize()) - 1);
+		var x = Math.floor(pixelX / (this.canvas.width() / this.model.getGridSize()));
+		var y = Math.floor(pixelY / (this.canvas.height() / this.model.getGridSize()));
 
 		if (this.model.water > 1) {
-			this.model.forrest[x][y] = 2;
+			this.model.forrest[x][y].color = 2;
 			this.model.water -= 100 / this.model.getWater();
 			this.update();
 		}
@@ -69,6 +71,7 @@
 
 	blaze.View.prototype.update = function() {
 		$("#water .value").text(Math.floor(this.model.water));
+		$("#burned .value").text(this.model.burned);
 		this.drawForrest();
 	};
 

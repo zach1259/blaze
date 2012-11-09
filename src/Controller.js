@@ -27,6 +27,7 @@
 
 		$('#restart').click(_.bind(function() {
 			this.model.restart();
+			this.model.startFire();
 			if(this.interval === null){
 				this.interval = window.setInterval(_.bind(this.step, this), this.stepDelay);
 			}

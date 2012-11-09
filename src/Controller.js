@@ -35,11 +35,11 @@
 
 		//disable double click selection
 		$(document).bind('mousedown.disableTextSelect', function() {
-	    	return false;
-	    });
+			return false;
+		});
 
-	    //initialize
-	    this.model.restart();
+		//initialize
+		this.model.restart();
 		this.view.update();
 	};
 

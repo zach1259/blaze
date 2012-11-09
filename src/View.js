@@ -24,6 +24,10 @@
 		this.canvas.click(_.bind(this._mouseClick, this));
 		this.canvas.mousemove(_.bind(this._mouseMove, this));
 		this.canvas.mouseleave(_.bind(this._mouseLeave, this));
+
+		blaze.click = 0;
+		this.invert = [false, true];
+		this.invertButton();
 	};
 
 	blaze.View.prototype.drawForrest = function() {
@@ -40,14 +44,29 @@
 		var forrest = this.model.forrest;
 		if (forrest[x][y].color <= this.model.getPrecentGreen()) {
 			this.ctx.fillStyle = "#00ff00";
+			if (this.invert[blaze.click % 2]) {
+				this.ctx.fillStyle = "#ff00ff";
+			}
 		} else if (forrest[x][y].color === 2) {
 			this.ctx.fillStyle = "#0000ff";
+			if (this.invert[blaze.click % 2]) {
+				this.ctx.fillStyle = "#ffff00";
+			}
 		} else if (forrest[x][y].color === 3) {
 			this.ctx.fillStyle = "#ff0000";
+			if (this.invert[blaze.click % 2]) {
+				this.ctx.fillStyle = "#00ffff";
+			}
 		} else if (forrest[x][y].color === 4) {
-			this.ctx.fillStyle = "#909090"
+			this.ctx.fillStyle = "#909090";
+			if (this.invert[blaze.click % 2]) {
+				this.ctx.fillStyle = "#7f7f7f";
+			}
 		} else {
 			this.ctx.fillStyle = "#855e42";
+			if (this.invert[blaze.click % 2]) {
+				this.ctx.fillStyle = "#8aa1bd";
+			}
 		}
 	};
 
@@ -64,9 +83,17 @@
 			this.update();
 		}
 	};
+	
 	blaze.View.prototype._mouseMove = function(event) {
 	};
 	blaze.View.prototype._mouseLeave = function(event) {
+	};
+
+	blaze.View.prototype.invertButton = function() {
+		$('#invert').click(function() {
+			blaze.click++
+		});
+		//this.update();
 	};
 
 	blaze.View.prototype.update = function() {

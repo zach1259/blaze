@@ -33,6 +33,14 @@
 			}
 		}, this));
 
+		$('#reset').click(_.bind(function() {
+			this.model.reset();
+			this.model.startFire();
+			if(this.interval === null){
+				this.interval = window.setInterval(_.bind(this.step, this), this.stepDelay);
+			}
+		}, this));
+
 		//disable double click selection
 		$(document).bind('mousedown.disableTextSelect', function() {
 			return false;

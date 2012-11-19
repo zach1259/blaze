@@ -11,6 +11,7 @@
 
 		this.water = 100;
 		this.burned = 0;
+		this.tries = 0;
 	};
 
 	blaze.Model.prototype.restart = function() {
@@ -27,6 +28,36 @@
 			}
 		}
 		this.water = 100;
+		this.tries = 0;
+	};
+
+	blaze.Model.prototype.reset = function() {
+		for (var x = 0; x < this.getGridSize(); x++) {
+			for (var y = 0; y < this.getGridSize(); y++) {
+				if (this.forrest[x][y].color > 1) {
+					this.forrest[x][y].color = .2;
+				}
+			}
+		}
+		this.tries++;
+	};
+
+	blaze.Model.prototype.waterFill = function(x, y) {
+		if (this.forrest[x][y].color === 2) {
+			var num = 0;
+			var surrounding = [];
+			for (var xx = x - 1; xx <= x + 1; xx++) {
+				for (var yy = y - 1; yy <= y + 1; yy++) {
+					if (xx < 50 && yy < 50 && xx >= 0 && yy >= 0) {
+						if (this.forrest[xx][yy].color <= this.getPrecentGreen()) {
+							surrounding[num] = this.forrest[xx][yy];
+							num++;
+						}
+					}
+				}
+			}
+			surrounding[Math.floor(Math.random() * surrounding.length)].color = 2;
+		}
 	};
 
 	blaze.Model.prototype.isBurning = function() {

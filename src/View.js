@@ -78,12 +78,13 @@
 		var y = Math.floor(pixelY / (this.canvas.height() / this.model.getGridSize()));
 
 		if (this.model.water > 1) {
+			this.model.waterFill(x, y);
 			this.model.forrest[x][y].color = 2;
 			this.model.water -= 100 / this.model.getWater();
 			this.update();
 		}
 	};
-	
+
 	blaze.View.prototype._mouseMove = function(event) {
 	};
 	blaze.View.prototype._mouseLeave = function(event) {
@@ -93,12 +94,12 @@
 		$('#invert').click(function() {
 			blaze.click++
 		});
-		//this.update();
 	};
 
 	blaze.View.prototype.update = function() {
 		$("#water .value").text(Math.floor(this.model.water));
 		$("#burned .value").text(this.model.burned);
+		$("#tries .value").text(this.model.tries);
 		this.drawForrest();
 	};
 

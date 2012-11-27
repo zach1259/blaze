@@ -34,9 +34,17 @@
 		this.size = this.model.getGridSize();
 		for (var x = 0; x < this.size; x++) {
 			for (var y = 0; y < this.size; y++) {
+				this.drawBrown(x, y);
 				this.drawColors(x, y);
 				this.ctx.fillRect(x / this.size, y / this.size, 1 / this.size, 1 / this.size);
 			}
+		}
+	};
+
+	blaze.View.prototype.drawBrown = function(x, y) {
+		this.ctx.fillStyle = "#855e42";
+		if (this.invert[blaze.click % 2]) {
+			this.ctx.fillStyle = "#8aa1bd";
 		}
 	};
 
@@ -61,11 +69,6 @@
 			this.ctx.fillStyle = "#909090";
 			if (this.invert[blaze.click % 2]) {
 				this.ctx.fillStyle = "#7f7f7f";
-			}
-		} else {
-			this.ctx.fillStyle = "#855e42";
-			if (this.invert[blaze.click % 2]) {
-				this.ctx.fillStyle = "#8aa1bd";
 			}
 		}
 	};

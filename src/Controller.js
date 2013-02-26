@@ -16,11 +16,15 @@
 			//number of times water can be droppped
 			waterTankSize: 30,
 			//porbabilty of a square being flammable when the game starts
-			precentGreen: 0.5
+			precentGreen: 0.5,
+			//number of neighbors 
+			floodFillNeighbors: 3
 		};
 		//#of millis to delay between steps
 		this.stepDelay = 50;
-		
+
+		//this.treeSprite = document.getElementById("treeSprite");
+
 		this.model = new blaze.Model(setup);
 		this.view = new blaze.View(this.model);
 		this.interval = null;

@@ -28,15 +28,50 @@
 		blaze.click = 0;
 		this.invert = [false, true];
 		this.invertButton();
+
+		//this.treeSprite = document.getElementById("treeSprite");
+		this.treeSprite = new Image();
+		this.treeSprite.src = "sprites/tree_cut.png";
+		this.treeSpriteLoaded = false;
+		var _this = this;
+		this.treeSprite.onload = function() {
+			_this.treeSpriteLoaded = true;
+		};
+		this.fireSprite = new Image();
+		this.fireSprite.src = "sprites/fire_cut.png";
+		this.fireSpriteLoaded = false;
+		var _this = this;
+		this.fireSprite.onload = function() {
+			_this.fireSpriteLoaded = true;
+		};
+		this.ashes = new Image();
+		this.ashes.src = "sprites/ashes.png";
+		this.ashesLoaded = false;
+		var _this = this;
+		this.ashes.onload = function() {
+			_this.ashesLoaded = true;
+		};
+
+		this.size = this.model.getGridSize();
 	};
 
 	blaze.View.prototype.drawForrest = function() {
-		this.size = this.model.getGridSize();
 		for (var x = 0; x < this.size; x++) {
 			for (var y = 0; y < this.size; y++) {
 				this.drawBrown(x, y);
+			
 				this.drawColors(x, y);
 				this.ctx.fillRect(x / this.size, y / this.size, 1 / this.size, 1 / this.size);
+
+				if (this.model.forrest[x][y].isGreen()) {
+					this.ctx.drawImage(this.treeSprite, x / this.size, y / this.size, 1 / this.size, 1 / this.size);
+				}
+				if (this.model.forrest[x][y].isRed()) {
+					this.ctx.drawImage(this.fireSprite, x / this.size, y / this.size, 1 / this.size, 1 / this.size);
+				}
+				if (this.model.forrest[x][y].isBurnt()) {
+					this.ctx.drawImage(this.ashes, x / this.size, y / this.size, 1 / this.size, 1 / this.size);
+				}
 			}
 		}
 	};
@@ -50,17 +85,17 @@
 
 	blaze.View.prototype.drawColors = function(x, y) {
 		var forrest = this.model.forrest;
-		if (forrest[x][y].color <= this.model.getPrecentGreen()) {
+		/*if (forrest[x][y].isGreen()) {
 			this.ctx.fillStyle = "#00ff00";
 			if (this.invert[blaze.click % 2]) {
 				this.ctx.fillStyle = "#ff00ff";
 			}
-		} else if (forrest[x][y].color === 2) {
+		} else*/ if (forrest[x][y].color === 2) {
 			this.ctx.fillStyle = "#0000ff";
 			if (this.invert[blaze.click % 2]) {
 				this.ctx.fillStyle = "#ffff00";
 			}
-		} else if (forrest[x][y].color === 3) {
+		} /*else if (forrest[x][y].color === 3) {
 			this.ctx.fillStyle = "#ff0000";
 			if (this.invert[blaze.click % 2]) {
 				this.ctx.fillStyle = "#00ffff";
@@ -70,7 +105,7 @@
 			if (this.invert[blaze.click % 2]) {
 				this.ctx.fillStyle = "#7f7f7f";
 			}
-		}
+		}*/
 	};
 
 	blaze.View.prototype._mouseClick = function(event) {
@@ -100,6 +135,10 @@
 	};
 
 	blaze.View.prototype.update = function() {
+		if (!this.treeSpriteLoaded && !this.fireSpriteLoaded && !this.ashesLoaded) {
+			window.setTimeout(_.bind(this.update, this), 100);
+			return;
+		}
 		$("#water .value").text(Math.floor(this.model.water));
 		$("#burned .value").text(this.model.burned);
 		$("#tries .value").text(this.model.tries);

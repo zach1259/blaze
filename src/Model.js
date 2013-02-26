@@ -8,6 +8,7 @@
 			this.getWater = _.constant(setup.waterTankSize);
 			this.getBurnRate = _.constant(setup.burnRate);
 			this.getFlamability = _.constant(setup.flamability);
+			this.getFloodFillNeighbors = _.constant(setup.floodFillNeighbors);
 
 			this.water = 100;
 			this.burned = 0;
@@ -57,7 +58,7 @@
 				.filter(function(Square) {
 					return Square.isGreen;
 				})
-				.first(3)
+				.first(this.getFloodFillNeighbors())
 				.each(function(Square) {
 					Square.color = 2;
 				});
@@ -102,7 +103,7 @@
 			for (var xx = x - 1; xx <= x + 1; xx++) {
 				for (var yy = y - 1; yy <= y + 1; yy++) {
 					if (xx < 50 && yy < 50 && xx >= 0 && yy >= 0) {
-						if (this.forrest[xx][yy].color <= this.getPrecentGreen()) {
+						if (this.forrest[xx][yy].isGreen()) {
 							this.forrest[xx][yy].color = 3;
 						}
 					}
@@ -125,7 +126,7 @@
 							this.forrest[x][y].stepsTillBurned--;
 						}
 					}
-					if (this.forrest[x][y].color === 4) {
+					if (this.forrest[x][y].isBurnt()) {
 						totalBurned++;
 					}	
 				}
@@ -146,6 +147,12 @@
 			}
 			this.isGreen = function() {
 				return this.color < model.getPrecentGreen();
+			}
+			this.isRed = function() {
+				return this.color === 3;
+			}
+			this.isBurnt = function() {
+				return this.color === 4;
 			}
 		};
 
